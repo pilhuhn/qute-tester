@@ -1,0 +1,28 @@
+{
+  "id": "1223",
+  "source": "notifications",
+  "specversion": "1.0",
+  "type": "myType",
+  "rhaccount": "54321",
+  "processorname": "p-12345",
+  "data": {
+    "bundle": "rhel",
+    "application": "policies",
+    "event_type": "policy-triggered",
+    "account_id": "54321",
+    "timestamp": "2021-09-08T09:31:39",
+    "events": [
+      {
+        "payload": {
+          "key1": "value",
+          "key2": "value2"
+        },
+        "metadata": {}
+      }
+    ],
+    "context": {
+      "ckey1": "cvalue",
+      "ckey2": "cvalue2"
+    }
+  }
+}
