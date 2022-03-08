@@ -84,3 +84,6 @@ Temporary Items
 .apdisk
 
 .swp
+
+#maven
+target
