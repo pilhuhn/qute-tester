@@ -1,11 +1,26 @@
 = Qute-tester project
 
-This project uses Qute to Interactively try Qute templates
+This project uses Qute to Interactively try Qute templates.
+To learn more about Qute, check out the https://quarkus.io/guides/qute-reference[Qute reference guide].
 
 
-## Running the application in dev mode
+== Running the application
 
-You can run your application in dev mode that enables live coding using:
+=== As a container
+
+Easiest is probably to run the application as a container
+
+[source, shell script]
+----
+docker run --rm -i -p 8001:8001 quay.io/pilhuhn/qute-tester
+----
+
+And then hit the application at http://localhost:8001/tryout.
+
+=== In development mode
+
+If you want to change the application and run a local copy of this repository,
+you can run your application in Quarkus dev mode that enables live coding using:
 
 [source,shell script]
 ----
@@ -14,7 +29,9 @@ mvn compile quarkus:dev
 
 The application listens on port 8001 at http://localhost:8001/tryout
 
-And will show a screen like the following:
+== Using the app
+
+Navigate your browser to http://localhost:8001/tryout[], and it will show a display like the following:
 
 image::screenshot.png[]
 
