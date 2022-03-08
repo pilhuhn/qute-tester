@@ -21,7 +21,6 @@ import java.util.Map;
 @Path("/tryout")
 public class Tryout {
 
-    public static final String INSTANT_MAIL = "instant_mail";
     @Inject
     TemplateProcessor tp;
 
@@ -73,23 +72,21 @@ public class Tryout {
         }
         rendered = rendered.trim();
 
-        if (params==null || params.isBlank()) {
-            form = form.replaceAll("##PARAMS##", sampleParams);
+        if (params.isBlank()) {
+            form = form.replace("##PARAMS##", sampleParams);
         } else {
-            form = form.replaceAll("##PARAMS##", params.trim());
+            form = form.replace("##PARAMS##", params.trim());
         }
-        form = form.replaceAll("##TEMPLATE##", escaped);
-        form = form.replaceAll("##MDCHECKED##", useMarkdown ? "checked":"");
+        form = form.replace("##TEMPLATE##", escaped);
+        form = form.replace("##MDCHECKED##", useMarkdown ? "checked":"");
 
         return formHead + "\n<!-- Rendered template below -->\n" + rendered +
                 "\n<!-- Rendered template above -->\n<p/><hr/><p/>" +
                 form;
-
-
     }
 
     private String htmlifyMrkDown(String rendered) {
-        String tmp = rendered.replaceAll("\n", "<br/>");
+        String tmp = rendered.replace("\n", "<br/>");
 
         tmp = replaceOne(tmp, "*", "strong");
         tmp = replaceOne(tmp, "_", "i");
@@ -144,7 +141,7 @@ public class Tryout {
 
 
     private String escape(String in) {
-        return in.replaceAll("<", "&lt;");
+        return in.replace("<", "&lt;");
     }
 
 
