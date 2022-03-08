@@ -37,8 +37,10 @@ public class Tryout {
     @Transactional
     public String showUI(@QueryParam("params") String params,
                          @QueryParam("template") String incomingTemplate,
+                         @QueryParam("useMrkdwn") String useMrkdwn,
                          @Context UriInfo uriInfo) {
 
+        String formHead = getFromResources("formHead.html");
         String form = getFromResources("form.html");
 
         if (params == null || params.isBlank()) {
@@ -50,17 +52,26 @@ public class Tryout {
         template = fillDefaultIfNeeded(template, sampleTemplate);
 
         String escaped = escape(template);
+        escaped = escaped.trim();
 
         Map<String, Object> payload;
         try {
             payload = new ObjectMapper().readValue(params, Map.class);
         } catch (JsonProcessingException e) {
-            return "Could not process parameters : " + e.getMessage() +
+            return formHead + "\n<br/>Could not process parameters : " + e.getMessage() +
                     "<p/><hr/><p/>" + form;
         }
 
+        boolean useMarkdown = false;
+        if (useMrkdwn != null && useMrkdwn.equals("on")) {
+            useMarkdown = true;
+        }
+
         String rendered = tp.renderTemplate(template, payload);
-        rendered = htmlifyMrkDown(rendered);
+        if (useMarkdown) {
+            rendered = htmlifyMrkDown(rendered);
+        }
+        rendered = rendered.trim();
 
         if (params==null || params.isBlank()) {
             form = form.replaceAll("##PARAMS##", sampleParams);
@@ -68,9 +79,10 @@ public class Tryout {
             form = form.replaceAll("##PARAMS##", params.trim());
         }
         form = form.replaceAll("##TEMPLATE##", escaped);
+        form = form.replaceAll("##MDCHECKED##", useMarkdown ? "checked":"");
 
-        return rendered +
-                "<p/><hr/><p/>" +
+        return formHead + "\n<!-- Rendered template below -->\n" + rendered +
+                "\n<!-- Rendered template above -->\n<p/><hr/><p/>" +
                 form;
 
 

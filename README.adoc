@@ -6,9 +6,11 @@ This project uses Qute to Interactively try Qute templates
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
-```shell script
+
+[source,shell script]
+----
 mvn compile quarkus:dev
-```
+----
 
 The application listens on port 8001 at http://localhost:8001/tryout
 
@@ -18,3 +20,15 @@ image::screenshot.png[]
 
 Modify either the template or the input data (CloudEvent, but any json will do) and
 press the _send_ button to render the template.
+
+If you select the _Use Mrkdwn' checkbox, some additional transformation of the output of the
+rendered template will be applied.
+In this case and markdown constructs like using *, _, ~ and ` for bold, italics, strike-through and code are translated into their html variants before displaying.
+This is to make it a bit more obvious if the template is rendered as desired in that case.
+The same applies for newlines `\n` .
+
+The following shows this with the same template and data as above:
+
+image::screenshot-md.png[]
+
+
